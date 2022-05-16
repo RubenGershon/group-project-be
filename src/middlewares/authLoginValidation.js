@@ -12,13 +12,19 @@ async function authLoginValidation(req, res, next) {
     return;
   }
 
-  const response = await authQueries.findUser(body.email);
+  let response = await authQueries.findUser(body.email, {
+    _id: 1,
+    email: 1,
+    role: 1,
+    password: 1,
+  });
   if (response.status !== "ok") {
     res.status(404).send(response);
     return;
   }
 
-  req.authUser = response;
+  req.authUser = response.data;
+  response = null;
   next();
 }
 

@@ -16,8 +16,8 @@ async function signUp(req, res) {
 }
 
 async function login(req, res) {
-  const userData = req.authUser;
-  
+  let userData = req.authUser;
+
   // Checking password, if password ok, create cookie with token inside
   // Creating token only with minimum unique data
   if (await bcrypt.compare(req.body.password, userData.password)) {
@@ -26,11 +26,13 @@ async function login(req, res) {
       httpOnly: true,
       sameSite: "lax",
     });
-
+      
+    userData = null;
     res.status(200).send({
       status: "ok",
     });
   } else {
+    userData = null;
     res.status(400).json({ status: "error", message: "invalid password" });
     return;
   }
