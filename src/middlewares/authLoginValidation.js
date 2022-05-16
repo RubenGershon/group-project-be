@@ -17,6 +17,9 @@ async function authLoginValidation(req, res, next) {
     email: 1,
     role: 1,
     password: 1,
+    firstName: 1,
+    lastName: 1,
+    phoneNumber: 1,
   });
   if (response.status !== "ok") {
     res.status(404).send(response);

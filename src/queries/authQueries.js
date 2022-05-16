@@ -1,6 +1,5 @@
 import userModel from "../models/userModel.js";
 
-
 async function createUser(data) {
   try {
     const user = await userModel.create(data);
@@ -19,7 +18,10 @@ async function findUser(
   userDataToReturn = {
     _id: 1,
     email: 1,
-    role:1
+    role: 1,
+    firstName: 1,
+    lastName: 1,
+    phoneNumber: 1,
   }
 ) {
   try {

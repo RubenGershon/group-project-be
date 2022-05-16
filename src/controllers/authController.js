@@ -26,10 +26,17 @@ async function login(req, res) {
       httpOnly: true,
       sameSite: "lax",
     });
-      
-    userData = null;
+
+    userData.password = null
     res.status(200).send({
       status: "ok",
+      data: {
+        id: userData._id,
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        phoneNumber: userData.phoneNumber,
+      },
     });
   } else {
     userData = null;
