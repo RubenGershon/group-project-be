@@ -44,6 +44,7 @@ ProductSchema.plugin(uniqueArray);
 ProductSchema.statics.deleteProduct = function (_id) {
     return this.deleteOne({_id: _id})
 }
+
 const productModel = mongoose.model("ProductSchema", ProductSchema);
 
 export default productModel;

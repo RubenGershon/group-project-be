@@ -14,11 +14,16 @@ async function createProduct(data) {
   }
 }
 
-async function deleteProduct ({id, publicID}) {
+async function deleteProduct (id) {
   try {
-   await cloudinary.uploader.destroy(publicID, function (result) {
-      console.log(result)
-    })
+   const product = await productModel.findById(id);
+   if (product.imagesPublicIds.lenght > 0) {
+    for (let i=0; i<product.imagesPublicIds.lenght; i++) {
+      await cloudinary.uploader.destroy(e, function (result) {
+        console.log(result)
+      })
+     }
+   }
 
     const deleteProduct = await productModel.deleteProduct(id);
     if (deleteProduct) {
@@ -26,6 +31,15 @@ async function deleteProduct ({id, publicID}) {
     } else {
       return { status: "error", message: "unknown" };
     }
+  }
+  catch (err) {
+    return { status: "error", message: err };
+  }
+}
+
+async function editDocument () {
+  try {
+
   }
   catch (err) {
     return { status: "error", message: err };
