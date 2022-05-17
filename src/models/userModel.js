@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import uniqueArray from "mongoose-unique-array";
+
 
 const UserSchema = new mongoose.Schema(
   {
@@ -33,6 +35,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    productsIds: [String]
   },
   { collection: "users" }
 );
@@ -49,6 +52,7 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
+UserSchema.plugin(uniqueArray);
 const userModel = mongoose.model("UserSchema", UserSchema);
 
 export default userModel;

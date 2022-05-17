@@ -1,12 +1,14 @@
 import express from "express";
-import productController from "../queries/productQueries.js";
+import multer from "multer";
+import productController from "../controllers/productController.js";
 
 
 
 const router = express.Router();
+const upload = multer({ dest: process.env.UPLOAD_FOLDER + "/" });
 
 
-router.post("/add", productController.createProduct );
+router.post("/add", upload.array("image"), productController.addProduct);
 router.get("/search", (req,res) => res.send(typeof(req.query.type)))
 
 
