@@ -46,7 +46,7 @@ async function getProductById(req, res) {
 }
 
 async function deleteProductControl (req,res) {
-  const query = await deleteProduct(req.params.id)
+  const query = await deleteProduct({id: req.params.id, publicID: req.body.publicID})
   if (query.status !== 'ok') {
     res.status(400).send(query);
     return;
