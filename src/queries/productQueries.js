@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 async function createProduct(data) {
   try {
@@ -13,8 +14,12 @@ async function createProduct(data) {
   }
 }
 
-async function deleteProduct (id) {
+async function deleteProduct ({id, publicID}) {
   try {
+    const cloudinaryDelete = await cloudinary.uploader.destroy(publicID, function (result) {
+      console.log(result)
+    })
+
     const deleteProduct = await productModel.deleteProduct(id);
     if (deleteProduct) {
       return { status: "ok"};
