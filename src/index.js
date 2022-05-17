@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
+import productRoutes from './routes/productRoutes.js'
 
 
 mongoose.connect(process.env.MONGOOSE_CREDS);
@@ -16,6 +17,7 @@ app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
 
 
 app.use("/auth", authRoutes);
+app.use("/products", productRoutes)
 
 
 
