@@ -14,6 +14,10 @@ router.post(
   productController.addProduct
 );
 
+router.delete('/:id',
+  productController.deleteProductControl
+)
+
 router.get(
   "/:id",
   tokenValidation,

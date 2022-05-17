@@ -13,6 +13,20 @@ async function createProduct(data) {
   }
 }
 
+async function deleteProduct (id) {
+  try {
+    const deleteProduct = await productModel.deleteProduct(id);
+    if (deleteProduct) {
+      return { status: "ok"};
+    } else {
+      return { status: "error", message: "unknown" };
+    }
+  }
+  catch (err) {
+    return { status: "error", message: err };
+  }
+}
+
 async function getProductById(id) {
   try {
     const product = await productModel.findById(id);
@@ -26,4 +40,4 @@ async function getProductById(id) {
   }
 }
 
-export { createProduct, getProductById };
+export { createProduct, getProductById, deleteProduct };

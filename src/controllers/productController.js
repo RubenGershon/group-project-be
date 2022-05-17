@@ -1,4 +1,4 @@
-import { createProduct } from "../queries/productQueries.js";
+import { createProduct, deleteProduct } from "../queries/productQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
@@ -45,7 +45,18 @@ async function getProductById(req, res) {
   res.status(200).send({ status: "ok", data: req.product });
 }
 
+async function deleteProductControl (req,res) {
+  const query = await deleteProduct(req.params.id)
+  if (query.status !== 'ok') {
+    res.status(400).send(query);
+    return;
+  }
+  res.status(201).send(query)
+  return
+}
+
 export default {
   addProduct,
   getProductById,
+  deleteProductControl
 };
