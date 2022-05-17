@@ -41,6 +41,11 @@ async function uploadImagesToCloudinary(filesArray) {
   return result;
 }
 
+async function getProductById(req, res) {
+  res.status(200).send({ status: "ok", data: req.product });
+}
+
 export default {
   addProduct,
+  getProductById,
 };

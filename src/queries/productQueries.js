@@ -13,4 +13,17 @@ async function createProduct(data) {
   }
 }
 
-export { createProduct };
+async function getProductById(id) {
+  try {
+    const product = await productModel.findById(id);
+    if (product) {
+      return { status: "ok", data: product.toObject() };
+    } else {
+      return { status: "error", message: "unknown" };
+    }
+  } catch (err) {
+    return { status: "error", message: err };
+  }
+}
+
+export { createProduct, getProductById };

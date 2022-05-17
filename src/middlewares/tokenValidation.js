@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 function tokenValidation(req, res, next) {
   try {
     const authenticatedUser = jwt.verify(

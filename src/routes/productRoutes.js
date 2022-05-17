@@ -1,15 +1,26 @@
 import express from "express";
 import multer from "multer";
 import productController from "../controllers/productController.js";
-
-
+import productIdValidation from "../middlewares/productIdValidation.js";
+import tokenValidation from "../middlewares/productIdValidation.js";
 
 const router = express.Router();
 const upload = multer({ dest: process.env.UPLOAD_FOLDER + "/" });
 
+router.post(
+  "/add",
+  tokenValidation,
+  upload.array("image"),
+  productController.addProduct
+);
 
-router.post("/add", upload.array("image"), productController.addProduct);
-router.get("/search", (req,res) => res.send(typeof(req.query.type)))
+router.get(
+  "/:id",
+  tokenValidation,
+  productIdValidation,
+  productController.getProductById
+);
 
+router.get("/search", (req, res) => res.send(typeof req.query.type));
 
 export default router;
