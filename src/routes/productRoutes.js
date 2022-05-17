@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import productController from "../controllers/productController.js";
 import productIdValidation from "../middlewares/productIdValidation.js";
-import tokenValidation from "../middlewares/productIdValidation.js";
+import tokenValidation from "../middlewares/tokenValidation.js";
 
 const router = express.Router();
 const upload = multer({ dest: process.env.UPLOAD_FOLDER + "/" });
