@@ -16,7 +16,7 @@ async function createProduct(data) {
 
 async function deleteProduct ({id, publicID}) {
   try {
-    const cloudinaryDelete = await cloudinary.uploader.destroy(publicID, function (result) {
+   await cloudinary.uploader.destroy(publicID, function (result) {
       console.log(result)
     })
 
