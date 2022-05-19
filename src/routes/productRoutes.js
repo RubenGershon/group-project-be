@@ -15,8 +15,12 @@ router.post(
 );
 
 router.delete('/:id',
+  tokenValidation,
   productController.deleteProductControl
 )
+
+router.post('/edit/:id',
+productController.editProductControl)
 
 router.get(
   "/:id",
@@ -25,6 +29,6 @@ router.get(
   productController.getProductById
 );
 
-router.get("/search", (req, res) => res.send(typeof req.query.type));
+router.get("/search/:key/:value", (req, res) => {res.send(req.params)});
 
 export default router;

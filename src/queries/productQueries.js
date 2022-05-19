@@ -17,9 +17,10 @@ async function createProduct(data) {
 async function deleteProduct (id) {
   try {
    const product = await productModel.findById(id);
-   if (product.imagesPublicIds.lenght > 0) {
-    for (let i=0; i<product.imagesPublicIds.lenght; i++) {
-      await cloudinary.uploader.destroy(e, function (result) {
+   if (product.imagesPublicIds.length > 0) {
+    for (let i=0; i<product.imagesPublicIds.length; i++) {
+      console.log(product.imagesPublicIds[i])
+      await cloudinary.uploader.destroy(product.imagesPublicIds[i], function (result) {
         console.log(result)
       })
      }
@@ -37,9 +38,15 @@ async function deleteProduct (id) {
   }
 }
 
-async function editDocument () {
+async function editProduct ({id, parameter, value}) {
+  console.log({[parameter]: value})
   try {
-
+    const change = await productModel.findOneAndUpdate({_id: id}, {[parameter]: value})
+    if (change) {
+      return { status: "ok", data: change.toObject() };
+    } else {
+      return { status: "error", message: "unknown" };
+    }
   }
   catch (err) {
     return { status: "error", message: err };
@@ -59,4 +66,4 @@ async function getProductById(id) {
   }
 }
 
-export { createProduct, getProductById, deleteProduct };
+export { createProduct, getProductById, deleteProduct, editProduct };
