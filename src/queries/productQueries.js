@@ -69,14 +69,14 @@ async function findProduct (query) {
   const {type, title, price, material, id, size, brand} = query
   const queryObj = {}
   if (type) {
-      // queryObj.type = {'type.type': type.type, 'type.subtype': type.subtype}
       queryObj['type.type'] = type.type;
       if (type.subtype) {
         queryObj['type.subtype'] = type.subtype
       }
   }
+  console.log(title)
   if (title) {
-    queryObj.title = { $regex: title, options: 'i' }
+    queryObj['title'] = {$regex: title, $options: 'i'}
   }
   console.log(queryObj)
   try {

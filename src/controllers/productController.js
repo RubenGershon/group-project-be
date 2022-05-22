@@ -57,7 +57,6 @@ async function deleteProductControl (req,res) {
 }
 
 async function searchProductController (req,res) {
-  console.log(req.query)
   const query = await findProduct(req.query)
   if (query.status !== 'ok') {
     res.status(400).send(query);
