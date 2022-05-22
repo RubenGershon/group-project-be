@@ -78,6 +78,10 @@ async function findProduct (query) {
   if (title) {
     queryObj['title'] = {$regex: title, $options: 'i'}
   }
+  if (price) {
+    const priceArr = price.split(',')
+    queryObj['price'] = {$gte: +priceArr[0], $lte: +priceArr[1]}
+  }
   console.log(queryObj)
   try {
     const products = await productModel.find(queryObj)
