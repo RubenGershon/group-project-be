@@ -23,12 +23,12 @@ router.post('/edit/:id',
 productController.editProductControl)
 
 router.get(
-  "/:id",
+  "/search/:id",
   tokenValidation,
   productIdValidation,
   productController.getProductById
 );
 
-router.get("/search", productController.searchProductControl);
+router.get("/search", );
 
 export default router;

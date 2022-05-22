@@ -68,7 +68,7 @@ async function getProductById(id) {
 
 async function findProduct (query) {
   try {
-    const product = await productModel.find(query).exec()
+    const product = await productModel.find({query})
     if (product) {
       return { status: "ok", data: product.toObject() };
     } else {
