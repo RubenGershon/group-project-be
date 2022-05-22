@@ -20,9 +20,6 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes)
 
 
-
-app.get("/", (req, res) => res.send(req.body));
-
 app.listen(process.env.PORT, () => {
   console.log(`Group project app listening on port ${process.env.PORT}...`);
 });

@@ -7,6 +7,7 @@ import tokenValidation from "../middlewares/tokenValidation.js";
 const router = express.Router();
 const upload = multer({ dest: process.env.UPLOAD_FOLDER + "/" });
 
+// Add a new product, need to be authenticated
 router.post(
   "/add",
   tokenValidation,
@@ -14,21 +15,34 @@ router.post(
   productController.addProduct
 );
 
-router.delete('/:id',
-  tokenValidation,
-  productController.deleteProductControl
-)
 
-router.post('/edit/:id',
-productController.editProductControl)
+// Search for a product, no need to be authenticated
+router.get("/search", productController.searchProductController);
 
+// Get a product based on it's id, need to be authenticated
 router.get(
-  "/search/:id",
+  "/:id",
   tokenValidation,
   productIdValidation,
   productController.getProductById
 );
 
-router.get("/search", );
+
+// Delete a product based on it's id, need to be authenticated
+router.delete(
+  "/:id",
+  tokenValidation,
+  productIdValidation,
+  productController.deleteProductControl
+  );
+  
+
+// Edit a product based on it's id, need to be authenticated
+router.post(
+  "/edit/:id",
+  tokenValidation,
+  productIdValidation,
+  productController.editProductControl
+);
 
 export default router;

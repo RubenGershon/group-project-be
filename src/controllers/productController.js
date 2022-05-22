@@ -55,7 +55,7 @@ async function deleteProductControl (req,res) {
   return
 }
 
-async function searchProductControl (req,res) {
+async function searchProductController (req,res) {
   const query = await findProduct(req.query)
   if (query.status !== 'ok') {
     res.status(400).send(query);
@@ -80,5 +80,5 @@ export default {
   getProductById,
   deleteProductControl,
   editProductControl,
-  searchProductControl
+  searchProductController
 };

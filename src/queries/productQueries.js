@@ -72,9 +72,9 @@ async function findProduct (query) {
 
   // }
   try {
-    const product = await productModel.find(query)
-    if (product) {
-      return { status: "ok", data: product.toObject() };
+    const products = await productModel.find(query)
+    if (products) {
+      return { status: "ok", data: products.map(product => product.toObject()) };
     } else {
       return { status: "error", message: "unknown" };
     }
