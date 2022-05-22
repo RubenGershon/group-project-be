@@ -39,7 +39,6 @@ async function deleteProduct (id) {
 }
 
 async function editProduct ({id, parameter, value}) {
-  console.log({[parameter]: value})
   try {
     const change = await productModel.findOneAndUpdate({_id: id}, {[parameter]: value})
     if (change) {
@@ -67,12 +66,21 @@ async function getProductById(id) {
 }
 
 async function findProduct (query) {
-  // const {type, title, price, material, id, size, brand} = query
-  // if (type) {
-
-  // }
+  const {type, title, price, material, id, size, brand} = query
+  const queryObj = {}
+  if (type) {
+      // queryObj.type = {'type.type': type.type, 'type.subtype': type.subtype}
+      queryObj['type.type'] = type.type;
+      if (type.subtype) {
+        queryObj['type.subtype'] = type.subtype
+      }
+  }
+  if (title) {
+    queryObj.title = { $regex: title, options: 'i' }
+  }
+  console.log(queryObj)
   try {
-    const products = await productModel.find(query)
+    const products = await productModel.find(queryObj)
     if (products) {
       return { status: "ok", data: products.map(product => product.toObject()) };
     } else {

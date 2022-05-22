@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 import uniqueArray from "mongoose-unique-array";
 
+
+const typeSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    required: true,
+    maxlength: 20
+  },
+  subtype: {
+    type: String,
+    maxlength: 20
+  }
+})
+
 const ProductSchema = new mongoose.Schema(
   {
     sellerId: {
@@ -15,13 +28,9 @@ const ProductSchema = new mongoose.Schema(
     price: {
       type: String,
       required: true,
-      maxlength: 10,
+
     },
-    type: {
-      type: String,
-      required: true,
-      maxlength: 15,
-    },
+    type: typeSchema,
     material: {
       type: String,
       maxlength: 15,

@@ -1,6 +1,7 @@
 import { createProduct, deleteProduct, editProduct, findProduct } from "../queries/productQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { equal } from "assert";
 
 async function addProduct(req, res) {
   const responseObj = await uploadImagesToCloudinary(req.files);
@@ -56,6 +57,7 @@ async function deleteProductControl (req,res) {
 }
 
 async function searchProductController (req,res) {
+  console.log(req.query)
   const query = await findProduct(req.query)
   if (query.status !== 'ok') {
     res.status(400).send(query);
