@@ -29,6 +29,6 @@ router.get(
   productController.getProductById
 );
 
-router.get("/search/:key/:value", (req, res) => {res.send(req.params)});
+router.get("/search", productController.searchProductControl);
 
 export default router;

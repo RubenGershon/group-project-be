@@ -66,4 +66,18 @@ async function getProductById(id) {
   }
 }
 
-export { createProduct, getProductById, deleteProduct, editProduct };
+async function findProduct (query) {
+  try {
+    const product = await productModel.find(query).exec()
+    if (product) {
+      return { status: "ok", data: product.toObject() };
+    } else {
+      return { status: "error", message: "unknown" };
+    }
+  }
+  catch (err) {
+    return { status: "error", message: err };
+  }
+}
+
+export { createProduct, getProductById, deleteProduct, editProduct, findProduct };
