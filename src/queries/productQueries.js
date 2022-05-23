@@ -74,7 +74,6 @@ async function findProduct (query) {
         queryObj['type.subtype'] = type.subtype
       }
   }
-  console.log(title)
   if (title) {
     queryObj['title'] = {$regex: title, $options: 'i'}
   }
@@ -82,7 +81,7 @@ async function findProduct (query) {
     const priceArr = price.split(',')
     queryObj['price'] = {$gte: +priceArr[0], $lte: +priceArr[1]}
   }
-  if (price) {
+  if (size) {
     queryObj['size'] = {$regex: size, $options: 'i'}
   }
   if (brand) {
