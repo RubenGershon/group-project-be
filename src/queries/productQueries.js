@@ -66,7 +66,7 @@ async function getProductById(id) {
 }
 
 async function findProduct (query) {
-  const {type, title, price, material, id, size, brand} = query
+  const {type, title, price, material, id, size, brand, condition} = query
   const queryObj = {}
   if (type) {
       queryObj['type.type'] = type.type;
@@ -90,6 +90,9 @@ async function findProduct (query) {
   }
   if (material) {
     queryObj['material'] = {$regex: material, $options: 'i'}
+  }
+  if (material) {
+    queryObj['material'] = {$regex: condition, $options: 'i'}
   }
   console.log(queryObj)
   try {
