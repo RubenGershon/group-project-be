@@ -40,6 +40,21 @@ async function getProductById(id) {
   }
 }
 
+async function getNumberOfProducts() {
+  try {
+    const count = await productModel.countDocuments({})
+    if (count) {
+      console.log(count)
+      return { status: "ok", data: count };
+    } else {
+      return { status: "error", message: "unknown" };
+    }
+  }
+  catch (err) {
+    return { status: "error", message: err };
+  }
+}
+
 async function findProduct(query) {
   const { type, title, price, material, id, size, brand, condition } = query;
   const queryObj = {};
@@ -69,7 +84,7 @@ async function findProduct(query) {
     queryObj["condition"] = { $regex: condition, $options: "i" };
   }
   try {
-    const products = await productModel.find(queryObj);
+    const products = await productModel.find(queryObj).limit(10);
     if (products) {
       return {
         status: "ok",
@@ -83,4 +98,4 @@ async function findProduct(query) {
   }
 }
 
-export { createProduct, getProductById, deleteProduct, findProduct };
+export { createProduct, getProductById, deleteProduct, findProduct, getNumberOfProducts };

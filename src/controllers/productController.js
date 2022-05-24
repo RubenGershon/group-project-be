@@ -2,6 +2,7 @@ import {
   createProduct,
   deleteProduct,
   findProduct,
+  getNumberOfProducts,
 } from "../queries/productQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
@@ -113,10 +114,21 @@ async function editProductController(req, res) {
   }
 }
 
+async function getNumberOfProductsControl (req,res) {
+  const query = await getNumberOfProducts()
+  if (query.status !== "ok") {
+    res.status(400).send(query);
+    return;
+  }
+  res.status(201).send(query);
+  return;
+}
+
 export default {
   addProduct,
   getProductById,
   deleteProductControl,
   editProductController,
   searchProductController,
+  getNumberOfProductsControl
 };
