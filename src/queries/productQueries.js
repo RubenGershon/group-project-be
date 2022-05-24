@@ -56,7 +56,7 @@ async function getNumberOfProducts() {
 }
 
 async function findProduct(query) {
-  const { type, title, price, material, id, size, brand, condition } = query;
+  const { type, title, price, material, id, size, brand, condition, page } = query;
   const queryObj = {};
   if (type) {
     queryObj["type.type"] = type.type;
@@ -84,7 +84,7 @@ async function findProduct(query) {
     queryObj["condition"] = { $regex: condition, $options: "i" };
   }
   try {
-    const products = await productModel.find(queryObj).limit(10);
+    const products = await productModel.find(queryObj).limit(10).skip(page*10);
     if (products) {
       return {
         status: "ok",
