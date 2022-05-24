@@ -4,7 +4,6 @@ import uniqueArray from "mongoose-unique-array";
 const typeSchema = new mongoose.Schema({
   type: {
     type: String,
-    default: "",
     required: true,
     maxlength: 20,
   },
