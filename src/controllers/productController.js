@@ -66,7 +66,7 @@ async function searchProductController (req,res) {
   return
 }
 
-async function editProductControl (req,res) {
+async function editProductController (req,res) {
   const query = await editProduct({id: req.params.id, parameter: req.body.parameter, value: req.body.value})
   if (query.status !== 'ok') {
     res.status(400).send(query);
@@ -80,6 +80,6 @@ export default {
   addProduct,
   getProductById,
   deleteProductControl,
-  editProductControl,
+  editProductController,
   searchProductController
 };

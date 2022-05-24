@@ -28,12 +28,15 @@ const ProductSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
-
     },
     type: typeSchema,
     material: {
       type: String,
-      maxlength: 15,
+      maxlength: 20,
+    },
+    condition: {
+      type: String,
+      maxlength: 20,
     },
     size: {
       type: String,
@@ -41,7 +44,7 @@ const ProductSchema = new mongoose.Schema(
     },
     brand: {
       type: String,
-      maxlength: 15,
+      maxlength: 30,
     },
     imagesUrls: [String],
     imagesPublicIds: [String],
