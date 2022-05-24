@@ -40,10 +40,11 @@ router.delete(
 );
 
 // Edit a product based on it's id, need to be authenticated
-router.post(
+router.put(
   "/edit/:id",
   tokenValidation,
   productIdValidation,
+  upload.array("image"),
   productController.editProductController
 );
 

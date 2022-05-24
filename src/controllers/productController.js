@@ -1,7 +1,10 @@
-import { createProduct, deleteProduct, editProduct, findProduct } from "../queries/productQueries.js";
+import {
+  createProduct,
+  deleteProduct,
+  findProduct,
+} from "../queries/productQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import { equal } from "assert";
 
 async function addProduct(req, res) {
   const responseObj = await uploadImagesToCloudinary(req.files);
@@ -43,37 +46,71 @@ async function uploadImagesToCloudinary(filesArray) {
 }
 
 async function getProductById(req, res) {
-  res.status(200).send({ status: "ok", data: req.product });
+  res.status(200).send({ status: "ok", data: req.product.toObject() });
 }
 
-async function deleteProductControl (req,res) {
-  const query = await deleteProduct(req.params.id)
-  if (query.status !== 'ok') {
+async function deleteProductControl(req, res) {
+  const product = req.product;
+  for (let i = 0; i < product.imagesPublicIds.length; i++) {
+    await cloudinary.uploader.destroy(product.imagesPublicIds[i]);
+  }
+  const response = await deleteProduct(req.product._id);
+  if (response.status !== "ok") {
+    res.status(400).send(response);
+    return;
+  }
+  res.status(201).send(response);
+  return;
+}
+
+async function searchProductController(req, res) {
+  const query = await findProduct(req.query);
+  if (query.status !== "ok") {
     res.status(400).send(query);
     return;
   }
-  res.status(201).send(query)
-  return
+  res.status(201).send(query);
+  return;
 }
 
-async function searchProductController (req,res) {
-  const query = await findProduct(req.query)
-  if (query.status !== 'ok') {
-    res.status(400).send(query);
-    return;
-  }
-  res.status(201).send(query)
-  return
-}
+async function editProductController(req, res) {
+  const product = req.product;
+  try {
+    if ("title" in req.body) product.tiile = req.body.title;
+    if ("price" in req.body) product.price = req.body.price;
+    if ("material" in req.body) product.material = req.body.material;
+    if ("condition" in req.body) product.condition = req.body.condition;
+    if ("size" in req.body) product.size = req.body.size;
+    if ("brand" in req.body) product.brand = req.body.brand;
+    if ("type" in req.body) product.type.type = req.body.type;
+    if ("subtype" in req.body) product.type.subtype = req.body.subtype;
 
-async function editProductController (req,res) {
-  const query = await editProduct({id: req.params.id, parameter: req.body.parameter, value: req.body.value})
-  if (query.status !== 'ok') {
-    res.status(400).send(query);
+    if (req.files) {
+      try {
+        for (let i = 0; i < product.imagesPublicIds.length; i++) {
+          await cloudinary.uploader.destroy(product.imagesPublicIds[i]);
+        }
+      } catch (err) {}
+
+      const uploadedImges = await uploadImagesToCloudinary(req.files)
+
+      product.imagesUrls = uploadedImges.imagesUrls;
+      product.imagesPublicIds = uploadedImges.imagesPublicIds;
+    }
+
+    await product.save();
+    res.status(201).send({
+      status: "ok",
+      message: "product successfully updated",
+    });
+    return;
+  } catch (error) {
+    res.status(400).send({
+      status: "error",
+      message: error,
+    });
     return;
   }
-  res.status(201).send(query)
-  return
 }
 
 export default {
@@ -81,5 +118,5 @@ export default {
   getProductById,
   deleteProductControl,
   editProductController,
-  searchProductController
+  searchProductController,
 };
