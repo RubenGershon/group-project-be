@@ -31,7 +31,10 @@ const ProductSchema = new mongoose.Schema(
       default: 0,
       required: true,
     },
-    type: typeSchema,
+    type: {
+      type: typeSchema,
+      required: true
+    },
     material: {
       type: String,
       default: "",
