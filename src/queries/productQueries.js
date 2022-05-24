@@ -90,8 +90,8 @@ async function findProduct (query) {
   if (material) {
     queryObj['material'] = {$regex: material, $options: 'i'}
   }
-  if (material) {
-    queryObj['material'] = {$regex: condition, $options: 'i'}
+  if (condition) {
+    queryObj['condition'] = {$regex: condition, $options: 'i'}
   }
   console.log(queryObj)
   try {
