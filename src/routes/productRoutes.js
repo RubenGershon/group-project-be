@@ -16,18 +16,12 @@ router.post(
   productController.addProduct
 );
 
-
 // Search for a product, no need to be authenticated
-router.get("/search", 
-// (req,res) => {
-//   const type = req.query.type
-//   const typeArr = type.split(',')
-//   const tyoeObj = {type: typeArr[0], subtype: typeArr[1]}
-//   res.send(tyoeObj)
-// },
-queryConverter,
-productController.searchProductController
-)
+router.get(
+  "/search",
+  queryConverter,
+  productController.searchProductController
+);
 
 // Get a product based on it's id, need to be authenticated
 router.get(
@@ -37,22 +31,20 @@ router.get(
   productController.getProductById
 );
 
-
 // Delete a product based on it's id, need to be authenticated
 router.delete(
   "/:id",
   tokenValidation,
   productIdValidation,
   productController.deleteProductControl
-  );
-  
+);
 
 // Edit a product based on it's id, need to be authenticated
 router.post(
   "/edit/:id",
   tokenValidation,
   productIdValidation,
-  productController.editProductControl
+  productController.editProductController
 );
 
 export default router;
