@@ -2,7 +2,9 @@ import {
   createProduct,
   deleteProduct,
   findProduct,
+  getNumberOfProducts,
 } from "../queries/productQueries.js";
+import { findUserById } from "../queries/userQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
@@ -13,6 +15,12 @@ async function addProduct(req, res) {
     ...req.body,
     ...responseObj,
   });
+
+  //add id of the created product to authenticated user productsIds list
+  const userModel = await findUserById(req.user._id);
+  userModel.data.productsIds.push(response.data._id);
+  await userModel.data.save();
+
   if (response.status !== "ok") {
     res.status(400).send(response);
     return;
@@ -76,14 +84,13 @@ async function searchProductController(req, res) {
 async function editProductController(req, res) {
   const product = req.product;
   try {
-    if ("title" in req.body) product.tiile = req.body.title;
+    if ("title" in req.body) product.title = req.body.title;
     if ("price" in req.body) product.price = req.body.price;
     if ("material" in req.body) product.material = req.body.material;
     if ("condition" in req.body) product.condition = req.body.condition;
     if ("size" in req.body) product.size = req.body.size;
     if ("brand" in req.body) product.brand = req.body.brand;
-    if ("type" in req.body) product.type.type = req.body.type;
-    if ("subtype" in req.body) product.type.subtype = req.body.subtype;
+    if ("type" in req.body) product.type = req.body.type;
 
     if (req.files) {
       try {
@@ -92,7 +99,7 @@ async function editProductController(req, res) {
         }
       } catch (err) {}
 
-      const uploadedImges = await uploadImagesToCloudinary(req.files)
+      const uploadedImges = await uploadImagesToCloudinary(req.files);
 
       product.imagesUrls = uploadedImges.imagesUrls;
       product.imagesPublicIds = uploadedImges.imagesPublicIds;
@@ -113,10 +120,21 @@ async function editProductController(req, res) {
   }
 }
 
+async function getNumberOfProductsControl (req,res) {
+  const query = await getNumberOfProducts()
+  if (query.status !== "ok") {
+    res.status(400).send(query);
+    return;
+  }
+  res.status(201).send(query);
+  return;
+}
+
 export default {
   addProduct,
   getProductById,
   deleteProductControl,
   editProductController,
   searchProductController,
+  getNumberOfProductsControl
 };

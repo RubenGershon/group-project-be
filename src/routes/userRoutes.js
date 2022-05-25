@@ -6,5 +6,6 @@ import userIdValidation from "../middlewares/userIdValidation.js";
 const router = express.Router();
 
 router.get("/:id", tokenValidation, userIdValidation, userController.getById);
+router.get("/products", tokenValidation, userIdValidation, userController.getAuthUserProducts);
 
 export default router;
