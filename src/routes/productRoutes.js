@@ -19,7 +19,6 @@ router.post(
 // Search for a product, no need to be authenticated
 router.get(
   "/search",
-  queryConverter,
   productController.searchProductController
 );
 
