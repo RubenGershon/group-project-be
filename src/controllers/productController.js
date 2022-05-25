@@ -3,6 +3,7 @@ import {
   deleteProduct,
   findProduct,
 } from "../queries/productQueries.js";
+import { findUserById } from "../queries/userQueries.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
@@ -13,6 +14,12 @@ async function addProduct(req, res) {
     ...req.body,
     ...responseObj,
   });
+
+  //add id of the created product to authenticated user productsIds list
+  const userModel = await findUserById(req.user._id)
+  userModel.data.productsIds.push(response.data._id)
+  await userModel.data.save()
+
   if (response.status !== "ok") {
     res.status(400).send(response);
     return;

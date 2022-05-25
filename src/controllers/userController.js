@@ -5,4 +5,8 @@ async function getById(req, res) {
   });
 }
 
-export default { getById };
+async function getAuthUserProducts(req, res) {
+  
+}
+
+export default { getById, getAuthUserProducts };

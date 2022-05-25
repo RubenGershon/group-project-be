@@ -9,6 +9,7 @@ async function findUserById(id) {
       role: 1,
       email: 1,
       phoneNumber: 1,
+      productsIds: 1,
     });
     if (user) {
       return { status: "ok", data: user };
