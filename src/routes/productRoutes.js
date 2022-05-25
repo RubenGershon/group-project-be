@@ -22,7 +22,7 @@ router.get(
   productController.searchProductController
 );
 
-router.get("/count", productController.getNumberOfProductsControl);
+// router.get("/count", productController.getNumberOfProductsControl);
 
 // Get a product based on it's id, need to be authenticated
 router.get(

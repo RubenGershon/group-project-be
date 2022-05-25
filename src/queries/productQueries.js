@@ -39,20 +39,20 @@ async function getProductById(id) {
   }
 }
 
-async function getNumberOfProducts() {
-  try {
-    const count = await productModel.countDocuments({})
-    if (count) {
-      console.log(count)
-      return { status: "ok", data: count };
-    } else {
-      return { status: "error", message: "unknown" };
-    }
-  }
-  catch (err) {
-    return { status: "error", message: err };
-  }
-}
+// async function getNumberOfProducts() {
+//   try {
+//     const count = await productModel.countDocuments({})
+//     if (count) {
+//       console.log(count)
+//       return { status: "ok", data: count };
+//     } else {
+//       return { status: "error", message: "unknown" };
+//     }
+//   }
+//   catch (err) {
+//     return { status: "error", message: err };
+//   }
+// }
 
 async function findProduct(query) {
   const { type, title, price, material, size, brand, condition, page } = query;
