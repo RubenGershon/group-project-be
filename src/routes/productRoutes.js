@@ -48,4 +48,7 @@ router.put(
   productController.editProductController
 );
 
+router.get('/count',
+productController.getNumberOfProductsControl)
+
 export default router;
