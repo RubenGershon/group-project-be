@@ -2,7 +2,6 @@ import express from "express";
 import multer from "multer";
 import productController from "../controllers/productController.js";
 import productIdValidation from "../middlewares/productIdValidation.js";
-import queryConverter from "../middlewares/queryConverter.js";
 import tokenValidation from "../middlewares/tokenValidation.js";
 
 const router = express.Router();

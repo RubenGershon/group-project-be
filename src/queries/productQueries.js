@@ -96,4 +96,4 @@ async function findProduct(query) {
   }
 }
 
-export { createProduct, getProductById, deleteProduct, findProduct, getNumberOfProducts };
+export { createProduct, getProductById, deleteProduct, findProduct};
