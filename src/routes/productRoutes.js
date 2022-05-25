@@ -22,6 +22,8 @@ router.get(
   productController.searchProductController
 );
 
+router.get("/count", productController.getNumberOfProductsControl);
+
 // Get a product based on it's id, need to be authenticated
 router.get(
   "/:id",
@@ -38,6 +40,7 @@ router.delete(
   productController.deleteProductController
 );
 
+
 // Edit a product based on it's id, need to be authenticated
 router.put(
   "/edit/:id",
@@ -47,6 +50,5 @@ router.put(
   productController.editProductController
 );
 
-router.get("/count", productController.getNumberOfProductsControl);
 
 export default router;
