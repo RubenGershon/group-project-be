@@ -58,7 +58,7 @@ async function findProduct(query) {
   const { type, title, price, material, size, brand, condition, page } = query;
   const queryObj = {};
   if (type) {
-    queryObj["type"] = type;
+    queryObj["type"] = type
   }
   if (title) {
     queryObj["title"] = { $regex: title, $options: "i" };
