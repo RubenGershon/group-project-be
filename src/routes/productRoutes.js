@@ -36,7 +36,7 @@ router.delete(
   "/:id",
   tokenValidation,
   productIdValidation,
-  productController.deleteProductControl
+  productController.deleteProductController
 );
 
 // Edit a product based on it's id, need to be authenticated
@@ -48,7 +48,6 @@ router.put(
   productController.editProductController
 );
 
-router.get('/count',
-productController.getNumberOfProductsControl)
+router.get("/count", productController.getNumberOfProductsControl);
 
 export default router;

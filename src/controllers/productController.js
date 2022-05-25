@@ -30,6 +30,29 @@ async function addProduct(req, res) {
   return;
 }
 
+async function deleteProductController(req, res) {
+  const product = req.product;
+  for (let i = 0; i < product.imagesPublicIds.length; i++) {
+    await cloudinary.uploader.destroy(product.imagesPublicIds[i]);
+  }
+  const response = await deleteProduct(req.product._id);
+  if (response.status !== "ok") {
+    res.status(400).send(response);
+    return;
+  }
+
+  //delete id of the deleted product to authenticated user productsIds list
+  const productId = String(req.product._id);
+  const userModel = await findUserById(req.user._id);
+  userModel.data.productsIds = userModel.data.productsIds.filter(
+    (id) => id !== productId
+  );
+  await userModel.data.save();
+
+  res.status(201).send(response);
+  return;
+}
+
 // Helper function
 async function uploadImagesToCloudinary(filesArray) {
   const imagesUrls = [];
@@ -55,20 +78,6 @@ async function uploadImagesToCloudinary(filesArray) {
 
 async function getProductById(req, res) {
   res.status(200).send({ status: "ok", data: req.product.toObject() });
-}
-
-async function deleteProductControl(req, res) {
-  const product = req.product;
-  for (let i = 0; i < product.imagesPublicIds.length; i++) {
-    await cloudinary.uploader.destroy(product.imagesPublicIds[i]);
-  }
-  const response = await deleteProduct(req.product._id);
-  if (response.status !== "ok") {
-    res.status(400).send(response);
-    return;
-  }
-  res.status(201).send(response);
-  return;
 }
 
 async function searchProductController(req, res) {
@@ -120,8 +129,8 @@ async function editProductController(req, res) {
   }
 }
 
-async function getNumberOfProductsControl (req,res) {
-  const query = await getNumberOfProducts()
+async function getNumberOfProductsControl(req, res) {
+  const query = await getNumberOfProducts();
   if (query.status !== "ok") {
     res.status(400).send(query);
     return;
@@ -133,8 +142,8 @@ async function getNumberOfProductsControl (req,res) {
 export default {
   addProduct,
   getProductById,
-  deleteProductControl,
+  deleteProductController,
   editProductController,
   searchProductController,
-  getNumberOfProductsControl
+  getNumberOfProductsControl,
 };

@@ -1,5 +1,4 @@
 import productModel from "../models/productModel.js";
-import { v2 as cloudinary } from "cloudinary";
 
 async function createProduct(data) {
   try {
@@ -56,7 +55,7 @@ async function getNumberOfProducts() {
 }
 
 async function findProduct(query) {
-  const { type, title, price, material, id, size, brand, condition, page } = query;
+  const { type, title, price, material, size, brand, condition, page } = query;
   const queryObj = {};
   if (type) {
     queryObj["type"] = type;
